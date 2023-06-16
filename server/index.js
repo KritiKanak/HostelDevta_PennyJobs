@@ -1,7 +1,8 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const { connectToDatabase } = require('./db');
-const authRouter = require('./routes/auth');
+const employerAuth = require('./routes/employerauth');
+const jobseekerAuth = require('./routes/jobseekerauth');
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.use(express.json());
 connectToDatabase();
 
 // Mount the auth router
-app.use('/api/auth', authRouter);
+app.use('/auth/employer', employerAuth);
+app.use('/auth/jobseeker', jobseekerAuth);
 
 const port = 3000;
 app.listen(port, () => {

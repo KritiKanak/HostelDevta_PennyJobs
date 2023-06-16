@@ -1,13 +1,13 @@
 const express = require('express');
-const { registerUser, loginUser } = require('../controller/authcontroller');
+const { registerJobSeeker, loginJobSeeker } = require('../controller/authcontroller');
 
 const router = express.Router();
 
-// Register endpoint
+// Register job seeker endpoint
 router.post('/register', async (req, res) => {
-  const { email, password, userType } = req.body;
+  const { email, password } = req.body;
 
-  const result = await registerUser(email, password, userType);
+  const result = await registerJobSeeker(email, password);
 
   if (result.success) {
     res.status(200).json({ message: result.message });
@@ -16,11 +16,11 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login endpoint
+// Login job seeker endpoint
 router.post('/login', async (req, res) => {
-  const { email, password, userType } = req.body;
+  const { email, password } = req.body;
 
-  const result = await loginUser(email, password, userType);
+  const result = await loginJobSeeker(email, password);
 
   if (result.success) {
     res.status(200).json({ message: result.message });

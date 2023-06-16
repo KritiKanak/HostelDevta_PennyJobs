@@ -1,8 +1,9 @@
 const admin = require('firebase-admin');
-const User = require('../models/userSchema');
+const Employer = require('../models/employerSchema');
+const JobSeeker = require('../models/jobSeekerSchema');
 
-// Register a new user
-async function registerUser(email, password, userType) {
+// Register a new employer
+async function registerEmployer(email, password) {
   try {
     // Create user in Firebase Auth
     const userRecord = await admin.auth().createUser({
@@ -10,27 +11,46 @@ async function registerUser(email, password, userType) {
       password,
     });
 
-    // Save user details in MongoDB
-    await User.create({ email, password, userType });
+    // Save employer details in MongoDB
+    await Employer.create({ email, password });
 
-    return { success: true, message: 'User registered successfully' };
+    return { success: true, message: 'Employer registered successfully' };
   } catch (error) {
     console.error('Registration error:', error);
     return { success: false, error: 'Registration failed' };
   }
 }
 
-// Login user
-async function loginUser(email, password, userType) {
+// Register a new job seeker
+async function registerJobSeeker(email, password) {
+  try {
+    // Create user in Firebase Auth
+    const userRecord = await admin.auth().createUser({
+      email,
+      password,
+    });
+
+    // Save job seeker details in MongoDB
+    await JobSeeker.create({ email, password });
+
+    return { success: true, message: 'Job seeker registered successfully' };
+  } catch (error) {
+    console.error('Registration error:', error);
+    return { success: false, error: 'Registration failed' };
+  }
+}
+
+// Login employer
+async function loginEmployer(email, password) {
   try {
     // Sign in user with Firebase Auth
     const userRecord = await admin.auth().getUserByEmail(email);
 
-    // Authenticate user in MongoDB
-    const user = await User.findOne({ email, password, userType }).exec();
+    // Authenticate employer in MongoDB
+    const employer = await Employer.findOne({ email, password }).exec();
 
-    if (user) {
-      return { success: true, message: 'Login successful' };
+    if (employer) {
+      return { success: true, message: 'Employer login successful' };
     } else {
       return { success: false, error: 'Invalid credentials' };
     }
@@ -40,4 +60,24 @@ async function loginUser(email, password, userType) {
   }
 }
 
-module.exports = { registerUser, loginUser };
+// Login job seeker
+async function loginJobSeeker(email, password) {
+  try {
+    // Sign in user with Firebase Auth
+    const userRecord = await admin.auth().getUserByEmail(email);
+
+    // Authenticate job seeker in MongoDB
+    const jobSeeker = await JobSeeker.findOne({ email, password }).exec();
+
+    if (jobSeeker) {
+      return { success: true, message: 'Job seeker login successful' };
+    } else {
+      return { success: false, error: 'Invalid credentials' };
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    return { success: false, error: 'Login failed' };
+  }
+}
+
+module.exports = { registerEmployer, registerJobSeeker, loginEmployer, loginJobSeeker };
