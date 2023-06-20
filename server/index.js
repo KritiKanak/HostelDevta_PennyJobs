@@ -1,16 +1,13 @@
 const express = require('express');
-const admin = require('firebase-admin');
 const { connectToDatabase } = require('./db');
-const employerAuth = require('./routes/employerauth');
-const jobseekerAuth = require('./routes/jobseekerauth');
+const employerAuth = require('./routes/Employer/employer');
+const emdetails = require('./routes/Employer/employerDetails');
+const jobseekerAuth = require('./routes/JobSeeker/jobseeker');
+const jsdetails = require('./routes/JobSeeker/jobseekerDetails');
+const employerPosts = require('./routes/Employer/jobposting');
 
 const app = express();
 
-// Firebase Admin SDK initialization
-const serviceAccount = require('../privateKey.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
 
 app.use(express.json());
 
@@ -18,10 +15,13 @@ app.use(express.json());
 connectToDatabase();
 
 // Mount the auth router
-app.use('/auth/employer', employerAuth);
-app.use('/auth/jobseeker', jobseekerAuth);
+app.use('/api/auth/employer', employerAuth);
+app.use('/api/auth/jobseeker', jobseekerAuth);
+app.use('/api/jobseekerdetails', jsdetails);
+app.use('/api/employerdetails', emdetails);
+app.use('/api/employer', employerPosts)
 
-const port = 3000;
+const port = 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
