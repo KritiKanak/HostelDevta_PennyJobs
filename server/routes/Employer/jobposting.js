@@ -10,13 +10,14 @@ router.post(
   fetchuser,
   [
     body('title', 'Title is required').notEmpty(),
+    body('jobtype', 'Job Type is required').notEmpty(),
     body('description', 'Description is required').notEmpty(),
     body('location', 'Location is required').notEmpty(),
     body('salary', 'Salary must be a valid number').isNumeric(),
   ],
   async (req, res) => {
     try {
-      const { title, description, location, salary } = req.body;
+      const { title,jobtype, description, location, salary } = req.body;
 
       // If there are errors, return bad request and the errors
       const errors = validationResult(req);
@@ -26,6 +27,7 @@ router.post(
 
       const jobDetail = new JobDetails({
         title,
+        jobtype,
         description,
         location,
         salary,
@@ -48,6 +50,7 @@ router.put('/update/:id', fetchuser, async (req, res) => {
   try {
     const newJobDetail = {};
     if (title) newJobDetail.title = title;
+    if (jobtype) newJobDetail.jobtype = jobtype;
     if (description) newJobDetail.description = description;
     if (location) newJobDetail.location = location;
     if (salary) newJobDetail.salary = salary;
@@ -75,9 +78,9 @@ router.put('/update/:id', fetchuser, async (req, res) => {
 });
 
 // Route: Fetch all job details using GET "/api/jobdetails/fetch"
-router.get('/fetch', async (req, res) => {
+router.get('/fetch',fetchuser, async (req, res) => {
   try {
-    const jobDetails = await JobDetails.find();
+    const jobDetails = await JobDetails.find({ user: req.user.id });
     res.json(jobDetails);
   } catch (error) {
     console.log(error.message);
