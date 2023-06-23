@@ -6,6 +6,8 @@ const jobseekerAuth = require('./routes/JobSeeker/jobseeker');
 const jsdetails = require('./routes/JobSeeker/jobseekerDetails');
 const employerPosts = require('./routes/Employer/jobposting');
 const jobPosts = require('./routes/JobSeeker/jobposts');
+const jobapplications = require('./routes/Employer/jobapplication')
+const jobapplied = require('./routes/JobSeeker/jobapplied')
 
 const app = express();
 
@@ -21,7 +23,9 @@ app.use('/api/auth/employer', employerAuth);
 app.use('/api/auth/jobseeker', jobseekerAuth);
 app.use('/api/jobseekerdetails', jsdetails);
 app.use('/api/employerdetails', emdetails);
-app.use('/api/employer', employerPosts)
+app.use('/api/employer', employerPosts);
+app.use('/api/employer', jobapplications);
+app.use('/api/jobseeker', jobapplied);
 
 const port = 5000;
 app.listen(port, () => {

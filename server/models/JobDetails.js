@@ -31,6 +31,17 @@ const JobDetailsSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  applications: {
+    type: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      },
+    ],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model('JobDetails', JobDetailsSchema);

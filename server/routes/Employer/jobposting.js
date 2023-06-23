@@ -2,12 +2,12 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const JobDetails = require('../../models/JobDetails');
-const fetchuser = require('../../middleware/fetchuser');
+const fetchemployer = require('../../middleware/fetchemployer');
 
 // Route: Add a new job detail using POST "/api/jobdetails/add"
 router.post(
   '/addjob',
-  fetchuser,
+  fetchemployer,
   [
     body('title', 'Title is required').notEmpty(),
     body('jobtype', 'Job Type is required').notEmpty(),
@@ -44,7 +44,7 @@ router.post(
 );
 
 // Route: Update a job detail using PUT "/api/jobdetails/update/:id"
-router.put('/update/:id', fetchuser, async (req, res) => {
+router.put('/update/:id', fetchemployer, async (req, res) => {
   const { title, description, location, salary } = req.body;
 
   try {
@@ -78,7 +78,7 @@ router.put('/update/:id', fetchuser, async (req, res) => {
 });
 
 // Route: Fetch all job details using GET "/api/jobdetails/fetch"
-router.get('/fetch',fetchuser, async (req, res) => {
+router.get('/fetch',fetchemployer, async (req, res) => {
   try {
     const jobDetails = await JobDetails.find({ user: req.user.id });
     res.json(jobDetails);
@@ -89,16 +89,16 @@ router.get('/fetch',fetchuser, async (req, res) => {
 });
 
 // Route: Delete a job detail using DELETE "/api/jobdetails/delete/:id"
-router.delete('/delete/:id', fetchuser, async (req, res) => {
+router.delete('/delete/:id', fetchemployer, async (req, res) => {
   try {
     let jobDetail = await JobDetails.findById(req.params.id);
     if (!jobDetail) {
       return res.status(404).send('Job detail not found');
     }
 
-    if (jobDetail.user.toString() !== req.user.id) {
-      return res.status(401).send('Not authorized to delete this job detail');
-    }
+    // if (jobDetail.user.toString() !== req.user.id) {
+    //   return res.status(401).send('Not authorized to delete this job detail');
+    // }
 
     await JobDetails.findByIdAndDelete(req.params.id);
     res.json({ success: 'Job detail has been deleted' });
