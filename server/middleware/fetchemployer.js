@@ -35,7 +35,7 @@ const fetchUser = (req, res, next) => {
     req.user = data.user;
 
     // Add role-based access control
-    if (req.user.role !== 'jobseeker') {
+    if (req.user.role !== 'employer') {
       return res.status(403).send({ error: 'Access denied' });
     }
 
