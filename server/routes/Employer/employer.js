@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator')
 const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken');
-const fetchuser = require('../../middleware/fetchuser')
+const fetchemployer = require('../../middleware/fetchemployer')
 
 const JWT_SECRET = 'missionimpossible!'
 
@@ -97,13 +97,13 @@ router.post('/login',[
 
 
 // Route 3: Get loggedin Employer details using: POST "/api/auth/getuser". Login required
-router.post('/getuser', fetchuser, async(req,res)=>{
+router.post('/getuser', fetchemployer, async(req,res)=>{
 try {
     userId = req.user.id;
     const user = await Employer.findById(userId).select("-password")
-    if(user.role !== 'employer'){
-        return res.status(401).json({ error: "Access denied" });
-    }
+    // if(user.role !== 'employer'){
+    //     return res.status(401).json({ error: "Access denied" });
+    // }
     res.send(user)
 } catch(error) {
     console.log(error.message);

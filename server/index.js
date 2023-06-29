@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const { connectToDatabase } = require('./db');
 const employerAuth = require('./routes/Employer/employer');
 const emdetails = require('./routes/Employer/employerDetails');
@@ -11,7 +12,7 @@ const jobapplied = require('./routes/JobSeeker/jobapplied')
 
 const app = express();
 
-
+app.use(cors())
 app.use(express.json());
 
 // Connect to MongoDB Atlas
