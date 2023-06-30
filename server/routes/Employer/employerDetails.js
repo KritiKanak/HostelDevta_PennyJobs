@@ -1,11 +1,11 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
-const fetchuser = require('../../middleware/fetchuser');
+const fetchemployer = require('../../middleware/fetchemployer');
 const EmployerDetails = require('../../models/EmployerDetails');
 
 // Route 1: Get all the employer details using GET "/api/employerdetails/fetchdetails". Login required
-router.get('/fetchdetails', fetchuser, async (req, res) => {
+router.get('/fetchdetails', fetchemployer, async (req, res) => {
   try {
     const employerDetails = await EmployerDetails.find({ user: req.user.id });
     res.json(employerDetails);
@@ -16,7 +16,7 @@ router.get('/fetchdetails', fetchuser, async (req, res) => {
 });
 
 // Route 2: Add new employer details using POST "/api/employerdetails/adddetails". Login required
-router.post('/adddetails', fetchuser, [
+router.post('/adddetails', fetchemployer, [
   body('companyname', 'Enter a valid company name').isLength({ min: 3 }),
   body('address', 'Enter a valid address').notEmpty(),
   body('size', 'Enter a valid company size').notEmpty(),
@@ -40,7 +40,7 @@ router.post('/adddetails', fetchuser, [
     });
 
     const savedEmployerDetails = await employerDetail.save();
-    res.json(savedEmployerDetails);
+    res.status(200).json(savedEmployerDetails);
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Internal Server Error');
@@ -48,7 +48,7 @@ router.post('/adddetails', fetchuser, [
 });
 
 // Route 3: Update existing employer details using PUT "/api/employerdetails/updatedetails/:id". Login required
-router.put('/updatedetails/:id', fetchuser, async (req, res) => {
+router.put('/updatedetails/:id', fetchemployer, async (req, res) => {
   const { companyname, address, size, type } = req.body;
 
   try {
@@ -81,7 +81,7 @@ router.put('/updatedetails/:id', fetchuser, async (req, res) => {
 });
 
 // Route 4: Delete an existing employer detail using DELETE "/api/employerdetails/deletedetail/:id". Login required
-router.delete('/deletedetail/:id', fetchuser, async (req, res) => {
+router.delete('/deletedetail/:id', fetchemployer, async (req, res) => {
   try {
     let employerDetail = await EmployerDetails.findById(req.params.id);
     if (!employerDetail) {

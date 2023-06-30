@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import LoginEm from '../components/Employer/Auth/Login';
+import SignupEm from '../components/Employer/Auth/Signup';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -11,7 +11,7 @@ const AuthPage = () => {
 
   return (
     <div>
-      {isLogin ? <Login/> : <Signup />}
+      {isLogin ? <LoginEm/> : <SignupEm />}
       <button onClick={toggleForm}>
         {isLogin ? 'Create an Account' : 'Already have an account?'}
       </button>
