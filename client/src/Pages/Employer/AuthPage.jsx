@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LoginEm from '../components/Employer/Auth/Login';
-import SignupEm from '../components/Employer/Auth/Signup';
+import LoginEm from '../../components/Employer/Auth/Login';
+import SignupEm from '../../components/Employer/Auth/Signup';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
