@@ -16,7 +16,6 @@ router.get('/fetchjobs', async (req, res) => {
   }
 });
 
-module.exports = router;
 
 // Route: Fetch jobs by jobType using GET "/api/jobdetails/fetch/:jobType"
 // Route: Fetch jobs by jobType using GET "/api/jobdetails/fetch/:jobType"
@@ -61,10 +60,10 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
       skills: jobSeekerDetails.skills,
       
     });
-
+    
     // Save the job application
     const savedJobApplication = await newJobApplication.save();
-
+    
     res.json(savedJobApplication);
   } catch (error) {
     console.log(error.message);
@@ -72,5 +71,6 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
   }
 });
 
-  
+module.exports = router;
+
   
