@@ -9,7 +9,7 @@ const EmployerSchema = new Schema({
     },
     companyname:{
         type: String,
-        required: true
+        required: true,
     },
     address:{
         type:String,
@@ -29,4 +29,4 @@ const EmployerSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('employerdetails', EmployerSchema)
+module.exports = mongoose.models.employerdetails || mongoose.model('employerdetails', EmployerSchema)

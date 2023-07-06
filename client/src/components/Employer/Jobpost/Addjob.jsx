@@ -40,7 +40,7 @@ const AddJob = () => {
       });
 
       // Redirect to employer details page
-      navigate('/employer/details');
+      // navigate('/employer/details');
     } catch (error) {
       console.error('Failed to add job posting:', error);
     }

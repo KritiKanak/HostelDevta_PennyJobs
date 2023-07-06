@@ -3,8 +3,9 @@ const router = express.Router();
 const fetchemployer = require('../../middleware/fetchemployer');
 const JobApplication = require('../../models/JobApplication');
 const jobdetails = require('../../models/JobDetails')
+const jsdetails = require('../../models/JSdetails')
 
-// Route: Get job applications for a specific job posted by the employer using GET "/api/jobapplications/employer/:jobId". Login required.
+// // Route: Get job applications for a specific job posted by the employer using GET "/api/jobapplications/employer/:jobId". Login required.
 router.get('/jobapplication/:jobId', fetchemployer, async (req, res) => {
   try {
     const employerId = req.user.id;
@@ -20,7 +21,7 @@ router.get('/jobapplication/:jobId', fetchemployer, async (req, res) => {
     const jobApplication = await JobApplication.find({ employer: employerId, job: jobId })
       .populate({
         path: 'user',
-        model: 'jsdetails',
+        // model: 'jsdetails',
         select: 'name address experience duration education skills'
       })
       // .populate('job', 'title jobtype description location salary');
@@ -30,10 +31,31 @@ router.get('/jobapplication/:jobId', fetchemployer, async (req, res) => {
     }
 
     res.json(jobApplication);
+    console.log(jobApplication)
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+// router.get('/jobapplication/:jobId', fetchemployer, async (req, res) => {
+//   try {
+//     const employerId = req.user.id;
+//     const jobId = req.params.jobId;
+
+//     // Find the job applications where the employer is the logged-in user and the job ID matches
+//     const jobApplications = await JobApplication.find({ employer: employerId, job: jobId });
+
+//     if (jobApplications.length === 0) {
+//       return res.status(200).json({ message: 'No applications found for this job.' });
+//     }
+
+//     res.json(jobApplications);
+//   } catch (error) {
+//     console.log(error.message);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 module.exports = router;

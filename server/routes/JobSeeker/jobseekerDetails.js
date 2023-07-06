@@ -30,13 +30,13 @@ router.post('/adddetails', fetchuser, [
     }
 
     const jsdetail = new JSDetails({
+      user: req.user.id,
       name,
       address,
       experience,
       duration,
       education,
       skills,
-      user: req.user.id,
     });
 
     const savedJSDetails = await jsdetail.save();

@@ -9,7 +9,7 @@ const JobseekerState = (props) => {
 
   const getJobSeekerDetails = async () => {
     try {
-      const response = await fetch(`${host}/api/jobseekerdetails/fetchdetails`, {
+      const response = await fetch(`${host}/api/jobseekerdetails/adddetails`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -23,15 +23,15 @@ const JobseekerState = (props) => {
     }
   };
 
-  const addJobSeekerDetails = async (name,address, experience, duration,education, skills) => {
+  const addJobSeekerDetails = async (formData) => {
     try {
       const response = await fetch(`${host}/api/jobseekerdetails/adddetails`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ name,address, experience, duration,education, skills }),
+        body: formData,
       });
       const data = await response.json();
       setJobSeekerDetails([...jobSeekerDetails, data]);
@@ -55,23 +55,23 @@ const JobseekerState = (props) => {
     }
   };
 
-  const updateJobSeekerDetails = async (id, name,address, experience, duration,education, skills) => {
+  const updateJobSeekerDetails = async (id, formData) => {
     try {
       const response = await fetch(
         `${host}/api/jobseekerdetails/updatedetails/${id}`,
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            // "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
           },
-          body: JSON.stringify({ name,address, experience, duration,education, skills }),
+          body: formData,
         }
       );
       const data = await response.json();
       setJobSeekerDetails(
         jobSeekerDetails.map((detail) =>
-          detail._id === id ? { ...detail, ...data.jobSeekerDetail } : detail
+          detail._id === id ? { ...detail, ...data.jsdetail } : detail
         )
       );
     } catch (error) {

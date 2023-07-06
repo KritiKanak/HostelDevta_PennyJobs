@@ -2,6 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const JobDetails = require('../../models/JobDetails');
+const EmployerDetails = require('../../models/Employerdetails');
 const fetchemployer = require('../../middleware/fetchemployer');
 
 // Route: Add a new job detail using POST "/api/jobdetails/add"
@@ -17,6 +18,7 @@ router.post(
   ],
   async (req, res) => {
     try {
+      const emdetails = await EmployerDetails.findOne({ user: req.user.id });  
       const { title,jobtype, description, location, salary } = req.body;
 
       // If there are errors, return bad request and the errors
@@ -26,7 +28,9 @@ router.post(
       }
 
       const jobDetail = new JobDetails({
+        companyname: emdetails.companyname,
         title,
+        // companyname
         jobtype,
         description,
         location,
