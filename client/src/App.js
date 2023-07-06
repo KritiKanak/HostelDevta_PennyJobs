@@ -13,7 +13,9 @@ import Jobseeker from './Pages/Jobseeker/JobseekerPage';
 import JobSeekerDetails from './Pages/Jobseeker/Details';
 import JsDashboard from './Pages/Jobseeker/Dashboard'
 import JobseekerState from './context/Jobseeker/JobseekerState'
-
+import JobDetails from './Pages/Jobseeker/JobDetails'
+import Jobapplied from './Pages/Jobseeker/JobsApplied';
+import JobApplications from './Pages/Employer/Applications';
 
 function App() {
   return (
@@ -32,7 +34,9 @@ function App() {
             <Route path="/jobseeker" element={<Jobseeker/>} exact/>
             <Route path="/jobseeker/details" element={<JobSeekerDetails/>} exact/>
             <Route path="/jobseeker/dashboard" element={<JsDashboard/>} exact/>
-
+            <Route path="/fetch/:jobId" element={<JobDetails/>}/>
+            <Route path="/job-applied" element={<Jobapplied/>} exact/>
+            <Route path="/applications/:jobId" element={<JobApplications/>} exact/>
           </Routes>
 
         </JobseekerState>

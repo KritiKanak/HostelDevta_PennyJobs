@@ -6,6 +6,11 @@ const JobDetailsSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  companyname: {
+    type: String,
+    ref: 'employerdetails',
+    required:true,
+  },
   title: {
     type: String,
     required: true,

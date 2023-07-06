@@ -6,27 +6,27 @@ const JobSeekerLogin = () => {
   const navigate = useNavigate();
   const host = "http://127.0.0.1:5000";
 
-  useEffect(() => {
-    const checkJobSeekerDetails = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await fetch(`${host}/api/auth/jobseeker/getuser`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": token,
-          },
-        });
-        const json = await response.json();
-        if (json._id) {
-          // Job Seeker details exist, redirect to the job search page
-          navigate("/jobsearch");
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const checkJobSeekerDetails = async () => {
+  //     const token = localStorage.getItem("token");
+  //     if (token) {
+  //       const response = await fetch(`${host}/api/auth/jobseeker/getuser`, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "auth-token": token,
+  //         },
+  //       });
+  //       const json = await response.json();
+  //       if (json._id) {
+  //         // Job Seeker details exist, redirect to the job search page
+  //         navigate("/");
+  //       }
+  //     }
+  //   };
 
-    checkJobSeekerDetails();
-  }, [navigate]);
+  //   checkJobSeekerDetails();
+  // }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const JobSeekerLogin = () => {
     if (json.success) {
       // Save the auth token and check job seeker details
       localStorage.setItem("token", json.authtoken);
-      navigate("/jobsearch");
+      navigate("/jobseeker/dashboard");
     }
   };
 

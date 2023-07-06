@@ -30,7 +30,8 @@ router.get('/fetch/:jobType', async (req, res) => {
     }
   });
 
-// Route: Apply for a job using POST "/api/jobdetails/apply/:jobId"
+
+// Route: Apply for a job using POST "/api/jobapplication/apply/:id". Login required.
 router.post('/apply/:id', fetchuser, async (req, res) => {
   try {
     const jobId = req.params.id;
@@ -42,6 +43,7 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
     }
 
     // Fetch the job seeker's details from JSDetails collection
+    console.log({user: req.user})
     const jobSeekerDetails = await JSdetails.findOne({ user: req.user.id });
     if (!jobSeekerDetails) {
       return res.status(404).send('Job seeker details not found');
@@ -51,14 +53,13 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
     const newJobApplication = new JobApplication({
       user: req.user.id,
       job: jobDetails._id,
-      employer:jobDetails.user,
+      employer: jobDetails.user,
       name: jobSeekerDetails.name,
       address: jobSeekerDetails.address,
       experience: jobSeekerDetails.experience,
       duration: jobSeekerDetails.duration,
       education: jobSeekerDetails.education,
       skills: jobSeekerDetails.skills,
-      
     });
     
     // Save the job application
@@ -70,6 +71,56 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+router.post('/fetch/:id', fetchuser, async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const jobDetails = await JobDetails.findById(jobId);
+    
+    if (!jobDetails) {
+      return res.status(404).json({ error: 'Job details not found' });
+    }
+    
+    res.json(jobDetails);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+router.get('/fetchjobs', async (req, res) => {
+  try {
+    let filters = {};
+
+    // Check if job type filter is present in the query parameters
+    if (req.query.jobtype) {
+      filters.jobtype = { $regex: req.query.jobtype, $options: 'i' };
+    }
+
+    // Check if salary filter is present in the query parameters
+    if (req.query.salary) {
+      filters.salary = { $gte: req.query.salary };
+    }
+
+    // Check if location filter is present in the query parameters
+    if (req.query.location) {
+      filters.location = { $regex: req.query.location, $options: 'i' };
+    }
+
+    // Add more filters as needed based on your requirements
+
+    const jobPostings = await JobPostings.find(filters);
+
+    res.json(jobPostings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 
 module.exports = router;
 
