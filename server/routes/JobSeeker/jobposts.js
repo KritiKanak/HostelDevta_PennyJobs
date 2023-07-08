@@ -3,6 +3,7 @@ const router = express.Router();
 const JobDetails = require('../../models/JobDetails');
 const JobApplication = require('../../models/JobApplication')
 const JSdetails = require('../../models/JSdetails')
+const JobSeeker = require('../../models/Jobseeker')
 const fetchuser = require('../../middleware/fetchuser')
 
 // Route: Fetch all jobs posted by employers using GET "/api/jobs"
@@ -49,6 +50,11 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
       return res.status(404).send('Job seeker details not found');
     }
 
+    const jobSeeker = await JobSeeker.findOne({ _id: req.user.id });
+    if (!jobSeekerDetails) {
+      return res.status(404).send('Job seeker details not found');
+    }
+
     // Create a new job application object
     const newJobApplication = new JobApplication({
       user: req.user.id,
@@ -56,6 +62,7 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
       employer: jobDetails.user,
       name: jobSeekerDetails.name,
       address: jobSeekerDetails.address,
+      email: jobSeeker.email,
       experience: jobSeekerDetails.experience,
       duration: jobSeekerDetails.duration,
       education: jobSeekerDetails.education,

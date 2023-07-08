@@ -16,6 +16,7 @@ import JobseekerState from './context/Jobseeker/JobseekerState'
 import JobDetails from './Pages/Jobseeker/JobDetails'
 import Jobapplied from './Pages/Jobseeker/JobsApplied';
 import JobApplications from './Pages/Employer/Applications';
+import Connect from './Pages/Employer/Connect'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/fetch/:jobId" element={<JobDetails/>}/>
             <Route path="/job-applied" element={<Jobapplied/>} exact/>
             <Route path="/applications/:jobId" element={<JobApplications/>} exact/>
+            <Route path="/connect/:id" element={<Connect/>} exact/>
           </Routes>
 
         </JobseekerState>

@@ -9,7 +9,7 @@ const JobseekerState = (props) => {
 
   const getJobSeekerDetails = async () => {
     try {
-      const response = await fetch(`${host}/api/jobseekerdetails/adddetails`, {
+      const response = await fetch(`${host}/api/jobseekerdetails/fetchdetails`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -23,15 +23,15 @@ const JobseekerState = (props) => {
     }
   };
 
-  const addJobSeekerDetails = async (formData) => {
+  const addJobSeekerDetails = async (name,address, experience, duration,education, skills) => {
     try {
       const response = await fetch(`${host}/api/jobseekerdetails/adddetails`, {
         method: "POST",
         headers: {
-          // "Content-Type": "application/json",
+          "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: formData,
+        body: JSON.stringify({ name,address, experience, duration,education, skills }),
       });
       const data = await response.json();
       setJobSeekerDetails([...jobSeekerDetails, data]);
@@ -55,23 +55,23 @@ const JobseekerState = (props) => {
     }
   };
 
-  const updateJobSeekerDetails = async (id, formData) => {
+  const updateJobSeekerDetails = async (id, name,address, experience, duration,education, skills) => {
     try {
       const response = await fetch(
         `${host}/api/jobseekerdetails/updatedetails/${id}`,
         {
           method: "PUT",
           headers: {
-            // "Content-Type": "application/json",
+            "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
           },
-          body: formData,
+          body: JSON.stringify({ name,address, experience, duration,education, skills }),
         }
       );
       const data = await response.json();
       setJobSeekerDetails(
         jobSeekerDetails.map((detail) =>
-          detail._id === id ? { ...detail, ...data.jsdetail } : detail
+          detail._id === id ? { ...detail, ...data.jobSeekerDetail } : detail
         )
       );
     } catch (error) {
