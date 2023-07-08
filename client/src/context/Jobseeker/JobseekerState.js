@@ -23,15 +23,25 @@ const JobseekerState = (props) => {
     }
   };
 
-  const addJobSeekerDetails = async (name,address, experience, duration,education, skills) => {
+
+
+  const addJobSeekerDetails = async (name, address, experience, duration, education, skills, file) => {
     try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('address', address);
+      formData.append('experience', experience);
+      formData.append('duration', duration);
+      formData.append('education', education);
+      formData.append('skills', skills);
+      formData.append('file', file);
+
       const response = await fetch(`${host}/api/jobseekerdetails/adddetails`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ name,address, experience, duration,education, skills }),
+        body: formData,
       });
       const data = await response.json();
       setJobSeekerDetails([...jobSeekerDetails, data]);
@@ -39,6 +49,9 @@ const JobseekerState = (props) => {
       console.error(error);
     }
   };
+
+
+
 
   const deleteJobSeekerDetails = async (id) => {
     try {
@@ -54,6 +67,7 @@ const JobseekerState = (props) => {
       console.error(error);
     }
   };
+
 
   const updateJobSeekerDetails = async (id, name,address, experience, duration,education, skills) => {
     try {

@@ -67,6 +67,7 @@ router.post('/apply/:id', fetchuser, async (req, res) => {
       duration: jobSeekerDetails.duration,
       education: jobSeekerDetails.education,
       skills: jobSeekerDetails.skills,
+      fileDownloadURL: jobSeekerDetails.fileDownloadURL
     });
     
     // Save the job application
