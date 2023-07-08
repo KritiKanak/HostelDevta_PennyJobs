@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JobSeekerContext from '../../context/Jobseeker/JobseekerContext';
-
+// import "./Details.css"
 const JobSeekerDetails = () => {
   const { addJobSeekerDetails } = useContext(JobSeekerContext);
   const navigate = useNavigate();
@@ -12,32 +12,17 @@ const JobSeekerDetails = () => {
   const [duration, setDuration] = useState('');
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
-  const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('address', address);
-    formData.append('experience', experience);
-    formData.append('duration', duration);
-    formData.append('education', education);
-    formData.append('skills', skills);
-    formData.append('file', file);
-
-    await addJobSeekerDetails(formData);
+    await addJobSeekerDetails(name, address, experience, duration, education, skills);
     setName('');
     setAddress('');
     setExperience('');
     setDuration('');
     setEducation('');
     setSkills('');
-    setFile(null);
     navigate('/jobseeker/dashboard');
-  };
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
   };
 
   return (
@@ -52,7 +37,7 @@ const JobSeekerDetails = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            minLength={3}
+            minLength={5}
             required
           />
         </div>
@@ -89,7 +74,6 @@ const JobSeekerDetails = () => {
             id="experience"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            minLength={5}
             required
           />
         </div>
@@ -112,17 +96,6 @@ const JobSeekerDetails = () => {
             id="skills"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="file" className="form-label">Upload File</label>
-          <input
-            type="file"
-            className="form-control"
-            id="file"
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
             required
           />
         </div>
