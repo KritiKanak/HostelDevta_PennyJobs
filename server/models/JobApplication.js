@@ -42,6 +42,9 @@ const JobApplicationSchema = new Schema({
       type:String,
       required:true
   },
+  fileDownloadURL:{
+    type:String
+  },
   date:{
       type: Date,
       default: Date.now

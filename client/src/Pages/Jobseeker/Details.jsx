@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JobSeekerContext from '../../context/Jobseeker/JobseekerContext';
-// import "./Details.css"
+
 const JobSeekerDetails = () => {
   const { addJobSeekerDetails } = useContext(JobSeekerContext);
   const navigate = useNavigate();
@@ -12,17 +12,24 @@ const JobSeekerDetails = () => {
   const [duration, setDuration] = useState('');
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
+  const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addJobSeekerDetails(name, address, experience, duration, education, skills);
+    await addJobSeekerDetails(name, address, experience, duration, education, skills, file);
     setName('');
     setAddress('');
     setExperience('');
     setDuration('');
     setEducation('');
     setSkills('');
+    setFile(null);
     navigate('/jobseeker/dashboard');
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
   };
 
   return (
@@ -96,6 +103,16 @@ const JobSeekerDetails = () => {
             id="skills"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="file" className="form-label">Upload AadharCard</label>
+          <input
+            type="file"
+            className="form-control"
+            id="file"
+            onChange={handleFileChange}
             required
           />
         </div>
