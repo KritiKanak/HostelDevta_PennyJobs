@@ -76,6 +76,7 @@ const JobPostingState = (props) => {
       console.error(error);
     }
   };
+  
 
   return (
     <JobPostingContext.Provider

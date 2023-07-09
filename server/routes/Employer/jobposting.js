@@ -49,7 +49,7 @@ router.post(
 
 // Route: Update a job detail using PUT "/api/jobdetails/update/:id"
 router.put('/update/:id', fetchemployer, async (req, res) => {
-  const { title, description, location, salary } = req.body;
+  const { title, jobtype, description, location, salary } = req.body;
 
   try {
     const newJobDetail = {};
@@ -81,6 +81,7 @@ router.put('/update/:id', fetchemployer, async (req, res) => {
   }
 });
 
+
 // Route: Fetch all job details using GET "/api/jobdetails/fetch"
 router.get('/fetch',fetchemployer, async (req, res) => {
   try {
@@ -100,9 +101,9 @@ router.delete('/delete/:id', fetchemployer, async (req, res) => {
       return res.status(404).send('Job detail not found');
     }
 
-    // if (jobDetail.user.toString() !== req.user.id) {
-    //   return res.status(401).send('Not authorized to delete this job detail');
-    // }
+    if (jobDetail.user.toString() !== req.user.id) {
+      return res.status(401).send('Not authorized to delete this job detail');
+    }
 
     await JobDetails.findByIdAndDelete(req.params.id);
     res.json({ success: 'Job detail has been deleted' });

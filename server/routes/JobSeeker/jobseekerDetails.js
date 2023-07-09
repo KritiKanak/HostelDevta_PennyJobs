@@ -234,7 +234,7 @@ router.post(
 
 // Route 3: Update an existing JSDetail using PUT "/api/jsdetails/updatedetails/:id". Login required
 
-router.put('/updatedetails/:id', fetchuser, async (req, res) => {
+router.put('/updatedetails/:id', fetchuser, upload.single('file'), async (req, res) => {
   const { name, address, experience, duration, education, skills } = req.body;
 
   try {
@@ -255,6 +255,48 @@ router.put('/updatedetails/:id', fetchuser, async (req, res) => {
       return res.status(401).send('Not Allowed');
     }
 
+    // Check if a new file is uploaded
+    if (req.file) {
+      const file = req.file;
+
+      // Upload the new file to Firebase Storage
+      const fileUploadPromise = new Promise((resolve, reject) => {
+        const fileUpload = bucket.file(file.originalname);
+        const blobStream = fileUpload.createWriteStream({
+          metadata: {
+            contentType: file.mimetype,
+          },
+        });
+
+        blobStream.on('error', (error) => {
+          reject(error);
+        });
+
+        blobStream.on('finish', () => {
+          // The file has been uploaded successfully
+          // Get the public URL of the uploaded file
+          fileUpload.getSignedUrl({
+            action: 'read',
+            expires: '03-17-2025', // Set the expiration date of the URL
+          }, (error, url) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(url);
+            }
+          });
+        });
+
+        blobStream.end(file.buffer);
+      });
+
+      // Wait for the file upload promise to resolve
+      const fileDownloadURL = await fileUploadPromise;
+
+      // Update the fileDownloadURL in the newJSDetails
+      newJSDetails.fileDownloadURL = fileDownloadURL;
+    }
+
     jsdetail = await JSDetails.findByIdAndUpdate(
       req.params.id,
       { $set: newJSDetails },
@@ -267,6 +309,7 @@ router.put('/updatedetails/:id', fetchuser, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 // Route 4: Delete an existing JSDetail using DELETE "/api/jsdetails/deletedetail/:id". Login required
 router.delete('/deletedetail/:id', fetchuser, async (req, res) => {
