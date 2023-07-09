@@ -69,29 +69,33 @@ const JobseekerState = (props) => {
   };
 
 
-  const updateJobSeekerDetails = async (id, name,address, experience, duration,education, skills) => {
+  const updateJobSeekerDetails = async (id, name, address, experience, duration, education, skills, file) => {
     try {
-      const response = await fetch(
-        `${host}/api/jobseekerdetails/updatedetails/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-          },
-          body: JSON.stringify({ name,address, experience, duration,education, skills }),
-        }
-      );
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('address', address);
+      formData.append('experience', experience);
+      formData.append('duration', duration);
+      formData.append('education', education);
+      formData.append('skills', skills);
+      formData.append('file', file);
+
+      const response = await fetch(`${host}/api/jobseekerdetails/updatedetails/${id}`, {
+        method: 'PUT',
+        headers: {
+          'auth-token': localStorage.getItem('token'),
+        },
+        body: formData,
+      });
       const data = await response.json();
       setJobSeekerDetails(
-        jobSeekerDetails.map((detail) =>
-          detail._id === id ? { ...detail, ...data.jobSeekerDetail } : detail
-        )
+        jobSeekerDetails.map((detail) => (detail._id === id ? { ...detail, ...data.jsdetail } : detail))
       );
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <JobSeekerContext.Provider

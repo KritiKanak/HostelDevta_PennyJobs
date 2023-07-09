@@ -1,23 +1,23 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
-import FetchAllJobs from '../../components/Jobseeker/Dashcomps/fetchjobs'
-import { useNavigate } from 'react-router-dom'
-const Dashboard = () => {
+import React from 'react';
+import Navbar from '../../components/Navbar';
+import FetchAllJobs from '../../components/Jobseeker/Dashcomps/fetchjobs';
+import { useNavigate } from 'react-router-dom';
 
+const Dashboard = () => {
   const navigate = useNavigate();
-  
-  const handleNavigate= () => {
-    navigate('/job-applied');
+
+  const handleNavigateToProfile = () => {
+    navigate('/jobseeker/profile');
   };
+
   return (
     <>
-
-      <Navbar/>
+      <Navbar />
       <h3>Job seeker Dashboard</h3>
-      <button onClick={handleNavigate}>Job Applied</button>
-      <FetchAllJobs/>
+      <button onClick={handleNavigateToProfile}>View Profile</button>
+      <FetchAllJobs />
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

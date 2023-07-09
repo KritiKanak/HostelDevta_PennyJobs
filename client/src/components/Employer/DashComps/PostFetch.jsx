@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import JobPostingContext from '../../../context/Jobposting/JobpostContext';
+import EditJobModal from './updatejob';
 
 const host = "http://127.0.0.1:5000";
 
 const JobsPostedByEmployer = () => {
   const [jobsPosted, setJobsPosted] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState('');
+  const { deleteJobPosting } = useContext(JobPostingContext);
 
   useEffect(() => {
     fetchJobsPosted();
@@ -24,7 +29,16 @@ const JobsPostedByEmployer = () => {
       console.error(error);
     }
   };
+
+  const toggleModal = (jobId) => {
+    setSelectedJobId(jobId);
+    setIsModalOpen(!isModalOpen);
+  };
   
+  const handleDelete = (id) => {
+    deleteJobPosting(id);
+    setJobsPosted(jobsPosted.filter((job) => job._id !== id));
+  };
 
   return (
     <div>
@@ -41,9 +55,14 @@ const JobsPostedByEmployer = () => {
               <p>{job.location}</p>
               <p>{job.salary}</p>
               <Link to={`/applications/${job._id}`}>View Applications</Link>
+              <button onClick={() => toggleModal(job._id)}>Edit</button>
+              <button onClick={() => handleDelete(job._id)}>Delete</button>
             </li>
           ))}
         </ul>
+      )}
+      {isModalOpen && (
+        <EditJobModal jobId={selectedJobId} closeModal={toggleModal} />
       )}
     </div>
   );
