@@ -41,7 +41,7 @@ function App() {
             <Route path="/jobseeker/details" element={<JobSeekerDetails/>} exact/>
             <Route path="/jobseeker/dashboard" element={<JsDashboard/>} exact/>
             <Route path="/fetch/:jobId" element={<JobDetails/>}/>
-            <Route path="/job-applied" element={<Jobapplied/>} exact/>
+            <Route path="/jobseeker/job-applied" element={<Jobapplied/>} exact/>
             <Route path="/jobseeker/profile" element={<JobSeekerProfile/>} exact/>
           </Routes>
 
