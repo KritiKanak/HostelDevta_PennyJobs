@@ -21,6 +21,8 @@ const Login = () => {
         if (json._id) {
           // Employer details exist, redirect to the add job page
           navigate("/addjob");
+        }else{
+          navigate("/employer/details")
         }
       }
     };
