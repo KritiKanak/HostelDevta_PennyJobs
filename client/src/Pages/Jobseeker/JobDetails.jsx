@@ -59,7 +59,6 @@ const JobDetails = () => {
       <p>{jobPostings.description}</p>
       <p>{jobPostings.salary}</p>
       <p>{jobPostings.location}</p>
-      {/* Display other job details */}
       <button onClick={handleApply}>Apply</button>
     </div>
   );

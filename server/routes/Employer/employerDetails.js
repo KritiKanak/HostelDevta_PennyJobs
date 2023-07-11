@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const fetchemployer = require('../../middleware/fetchemployer');
-const EmployerDetails = require('../../models/EmployerDetails');
+const EmployerDetails = require('../../models/Employerdetails');
 
 // Route 1: Get all the employer details using GET "/api/employerdetails/fetchdetails". Login required
 router.get('/fetchdetails', fetchemployer, async (req, res) => {
