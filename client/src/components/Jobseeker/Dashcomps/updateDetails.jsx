@@ -1,7 +1,29 @@
 import React, { useState, useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField } from '@material-ui/core';
 import JobSeekerContext from '../../../context/Jobseeker/JobseekerContext';
 
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContent: {
+    backgroundColor: theme.palette.background.paper,
+    outline: 'none',
+    padding: theme.spacing(4),
+  },
+  formGroup: {
+    marginBottom: theme.spacing(2),
+  },
+  submitButton: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 const UpdateProfileModal = ({ closeModal, jobId }) => {
+  const classes = useStyles();
   const { updateJobSeekerDetails } = useContext(JobSeekerContext);
 
   const [name, setName] = useState('');
@@ -24,39 +46,78 @@ const UpdateProfileModal = ({ closeModal, jobId }) => {
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className={classes.modal}>
+      <div className={classes.modalContent}>
         <h3>Update Profile</h3>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Name"
+              variant="outlined"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label htmlFor="address">Address</label>
-            <textarea id="address" value={address} onChange={(e) => setAddress(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Address"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label htmlFor="experience">Experience</label>
-            <input type="text" id="experience" value={experience} onChange={(e) => setExperience(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Experience"
+              variant="outlined"
+              fullWidth
+              value={experience}
+              onChange={(e) => setExperience(e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label htmlFor="duration">Duration</label>
-            <input type="text" id="duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Duration"
+              variant="outlined"
+              fullWidth
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label htmlFor="education">Education</label>
-            <input type="text" id="education" value={education} onChange={(e) => setEducation(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Education"
+              variant="outlined"
+              fullWidth
+              value={education}
+              onChange={(e) => setEducation(e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label htmlFor="skills">Skills</label>
-            <input type="text" id="skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
+          <div className={classes.formGroup}>
+            <TextField
+              label="Skills"
+              variant="outlined"
+              fullWidth
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
+            />
           </div>
-          <div className="form-group">
+          <div className={classes.formGroup}>
             <label htmlFor="file">Upload File</label>
             <input type="file" id="file" onChange={handleFileChange} />
           </div>
-          <button type="submit" className="btn btn-primary">Update</button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.submitButton}
+          >
+            Update
+          </Button>
         </form>
       </div>
     </div>
