@@ -29,4 +29,4 @@ const EmployerSchema = new Schema({
     }
 })
 
-module.exports = mongoose.models.employerdetails || mongoose.model('employerdetails', EmployerSchema)
+module.exports = mongoose.model('employerdetails', EmployerSchema)
