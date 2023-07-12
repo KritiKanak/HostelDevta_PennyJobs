@@ -19,7 +19,7 @@ const JobSeekerSignUp = () => {
       console.log(response.data);
       if (response.data.success) {
         localStorage.setItem('token', response.data.authtoken);
-        navigate('/jobseeker/details'); // Redirect to the jobseeker details page
+        navigate('/candidate/details'); // Redirect to the jobseeker details page
       }
     } catch (error) {
       console.error(error);

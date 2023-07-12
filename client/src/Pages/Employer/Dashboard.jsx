@@ -1,8 +1,9 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Employer/Navbar';
 import AddJob from '../../components/Employer/DashComps/Addjob';
 import PostFetch from '../../components/Employer/DashComps/PostFetch';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Dashboard = () => {
       </div>
       <AddJob />
       <PostFetch />
+      <Footer/>
     </>
   );
 };

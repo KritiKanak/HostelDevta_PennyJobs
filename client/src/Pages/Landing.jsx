@@ -6,7 +6,7 @@ function HomePage() {
     <div>
       <h1>Welcome to the Job Portal</h1>
       <Link to="/employer" className="button">Employer</Link>
-      <Link to="/jobseeker" className="button">Jobseeker</Link>
+      <Link to="/candidate" className="button">Jobseeker</Link>
     </div>
   );
 }

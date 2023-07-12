@@ -32,17 +32,17 @@ function App() {
             {/* Employer Routes */}
             <Route path="/employer" element={<Employer/>} exact/>
             <Route path="/employer/details" element={<EmployerDetails/>} exact/>
-            <Route path="/addjob" element={<EmDashboard/>} exact/>
+            <Route path="/employers/dashboard" element={<EmDashboard/>} exact/>
             <Route path="/applications/:jobId" element={<JobApplications/>} exact/>
             <Route path="/connect/:id" element={<Connect/>} exact/>
             <Route path="/employer/profile" element={<EmployerProfile/>} exact/>
             {/* Jobseeker Routes */}
-            <Route path="/jobseeker" element={<Jobseeker/>} exact/>
-            <Route path="/jobseeker/details" element={<JobSeekerDetails/>} exact/>
-            <Route path="/jobseeker/dashboard" element={<JsDashboard/>} exact/>
+            <Route path="/candidate" element={<Jobseeker/>} exact/>
+            <Route path="/candidate/details" element={<JobSeekerDetails/>} exact/>
+            <Route path="/candidate/dashboard" element={<JsDashboard/>} exact/>
             <Route path="/fetch/:jobId" element={<JobDetails/>}/>
-            <Route path="/jobseeker/job-applied" element={<Jobapplied/>} exact/>
-            <Route path="/jobseeker/profile" element={<JobSeekerProfile/>} exact/>
+            <Route path="/candidate/job-applied" element={<Jobapplied/>} exact/>
+            <Route path="/candidate/profile" element={<JobSeekerProfile/>} exact/>
           </Routes>
 
         </JobseekerState>

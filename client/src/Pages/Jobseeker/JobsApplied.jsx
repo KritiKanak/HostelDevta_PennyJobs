@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from '../../components/Jobseeker/Navbar';
+import Footer from '../../components/Footer';
 
 const host = "http://127.0.0.1:5000";
 
@@ -29,25 +31,29 @@ const JobAppliedPage = () => {
   };
 
   return (
-    <div>
-      <h2>Jobs Applied</h2>
-      {jobApplications.length === 0 ? (
-        <p>No jobs applied yet.</p>
-      ) : (
-        <ul>
-          {jobApplications.map((jobApplication) => (
-            <li key={jobApplication._id}>
-              <h3>{jobApplication.job.companyname}</h3>
-              <h3>{jobApplication.job.title}</h3>
-              <p>{jobApplication.job.jobtype}</p>
-              <p>{jobApplication.job.description}</p>
-              <p>{jobApplication.job.salary}</p>
-              <p>{jobApplication.job.location}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <>
+      <Navbar/>
+      <div>
+        <h2>Jobs Applied</h2>
+        {jobApplications.length === 0 ? (
+          <p>No jobs applied yet.</p>
+        ) : (
+          <ul>
+            {jobApplications.map((jobApplication) => (
+              <li key={jobApplication._id}>
+                <h3>{jobApplication.job.companyname}</h3>
+                <h3>{jobApplication.job.title}</h3>
+                <p>{jobApplication.job.jobtype}</p>
+                <p>{jobApplication.job.description}</p>
+                <p>{jobApplication.job.salary}</p>
+                <p>{jobApplication.job.location}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <Footer/>
+    </>
   );
 };
 

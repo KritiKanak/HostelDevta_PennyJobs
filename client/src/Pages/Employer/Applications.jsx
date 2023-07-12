@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Container, Typography, Card, CardContent, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "../../components/Employer/Navbar"
+import Footer from "../../components/Footer";
 
 const host = "http://127.0.0.1:5000";
 
@@ -77,44 +79,48 @@ const JobApplications = () => {
   };
 
   return (
-    <Container className={classes.container}>
-      <Typography variant="h3" component="h3">
-        Job Applications
-      </Typography>
-      {jobApplications.length === 0 ? (
-        <Typography variant="body1" component="p">
-          No applications found for this job.
+    <>
+    <Navbar/>
+      <Container className={classes.container}>
+        <Typography variant="h3" component="h3">
+          Job Applications
         </Typography>
-      ) : (
-        <ul>
-          {jobApplications.map((application) => (
-            <Card key={application._id} className={classes.card}>
-              <CardContent className={classes.cardContent}>
-                <Typography variant="h5" component="h5" className={classes.name}>
-                  {application.name}
-                </Typography>
-                <Typography variant="body1" component="h5" className={classes.experience}>
-                  Experience: {application.experience}
-                </Typography>
-                <Typography variant="body1" component="p" className={classes.duration}>
-                  Duration: {application.duration}
-                </Typography>
-                <Typography variant="body1" component="p" className={classes.skills}>
-                  Skills: {application.skills}
-                </Typography>
-                <Button
-                  variant="contained"
-                  className={classes.seeMoreButton}
-                  onClick={() => handleSeeMoreInfo(application)}
-                >
-                  See More Info
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </ul>
-      )}
-    </Container>
+        {jobApplications.length === 0 ? (
+          <Typography variant="body1" component="p">
+            No applications found for this job.
+          </Typography>
+        ) : (
+          <ul>
+            {jobApplications.map((application) => (
+              <Card key={application._id} className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                  <Typography variant="h5" component="h5" className={classes.name}>
+                    {application.name}
+                  </Typography>
+                  <Typography variant="body1" component="h5" className={classes.experience}>
+                    Experience: {application.experience}
+                  </Typography>
+                  <Typography variant="body1" component="p" className={classes.duration}>
+                    Duration: {application.duration}
+                  </Typography>
+                  <Typography variant="body1" component="p" className={classes.skills}>
+                    Skills: {application.skills}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    className={classes.seeMoreButton}
+                    onClick={() => handleSeeMoreInfo(application)}
+                  >
+                    See More Info
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </ul>
+        )}
+      </Container>
+      <Footer/>
+    </>
   );
 };
 

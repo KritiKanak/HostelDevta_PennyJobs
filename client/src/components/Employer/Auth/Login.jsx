@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const host = "http://127.0.0.1:5000";
 
@@ -20,9 +21,9 @@ const Login = () => {
         const json = await response.json();
         if (json._id) {
           // Employer details exist, redirect to the add job page
-          navigate("/addjob");
-        }else{
-          navigate("/employer/details")
+          navigate("/employers/dashboard");
+        } else {
+          navigate("/employer/details");
         }
       }
     };
@@ -32,22 +33,29 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${host}/api/auth/employer/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      // Save the auth token and check employer details
-      localStorage.setItem("token", json.authtoken);
-      navigate("/addjob");
+    try {
+      const response = await fetch(`${host}/api/auth/employer/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      });
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        // Save the auth token and check employer details
+        localStorage.setItem("token", json.authtoken);
+        navigate("/employers/dashboard");
+      } else {
+        setError("Invalid credentials. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred. Please try again later.");
     }
   };
 
@@ -60,6 +68,7 @@ const Login = () => {
       <div className="row align-items-center" style={{ height: "72vh" }}>
         <div className="col-md-4">
           <h2 className="my-2">Login</h2>
+          {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
