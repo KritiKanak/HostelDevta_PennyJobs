@@ -45,7 +45,7 @@ const JobSeekerLogin = () => {
     if (json.success) {
       // Save the auth token and check job seeker details
       localStorage.setItem("token", json.authtoken);
-      navigate("/jobseeker/dashboard");
+      navigate("/candidate/dashboard");
     }
   };
 

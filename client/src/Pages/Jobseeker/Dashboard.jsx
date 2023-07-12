@@ -1,17 +1,18 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/Jobseeker/Navbar';
 import FetchAllJobs from '../../components/Jobseeker/Dashcomps/fetchjobs';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const handleNavigateToProfile = () => {
-    navigate('/jobseeker/profile');
+    navigate('/candidate/profile');
   };
 
   const handleNavigateToApplied = () => {
-    navigate('/jobseeker/job-applied')
+    navigate('/candidate/job-applied')
   }
 
   return (
@@ -21,6 +22,7 @@ const Dashboard = () => {
       <button onClick={handleNavigateToProfile}>View Profile</button>
       <button onClick={handleNavigateToApplied}>Jobs Applied</button>
       <FetchAllJobs />
+      <Footer/>
     </>
   );
 };

@@ -18,7 +18,7 @@ const EmployerDetails = () => {
     setAddress('');
     setSize('');
     setType('');
-    navigate('/addjob')
+    navigate('/employer/dashboard')
   };
 
   return (

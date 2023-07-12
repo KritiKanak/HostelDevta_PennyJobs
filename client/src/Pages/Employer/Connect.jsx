@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import Skeleton from "react-loading-skeleton";
+import Navbar from "../../components/Employer/Navbar"
+import Footer from "../../components/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,110 +121,114 @@ const ConnectPage = () => {
   };
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h3" component="h3" className={classes.title}>
-          Candidate Details
-        </Typography>
-        {application ? (
-          <form className={classes.form}>
-            <TextField
-              label="Name"
-              value={application.name}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+    <>
+      <Navbar/>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography variant="h3" component="h3" className={classes.title}>
+            Candidate Details
+          </Typography>
+          {application ? (
+            <form className={classes.form}>
+              <TextField
+                label="Name"
+                value={application.name}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            <TextField
-              label="Address"
-              value={application.address}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+              <TextField
+                label="Address"
+                value={application.address}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            <TextField
-              label="Experience"
-              value={application.experience}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+              <TextField
+                label="Experience"
+                value={application.experience}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            <TextField
-              label="Duration"
-              value={application.duration}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+              <TextField
+                label="Duration"
+                value={application.duration}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            <TextField
-              label="Education"
-              value={application.education}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+              <TextField
+                label="Education"
+                value={application.education}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            <TextField
-              label="Skills"
-              value={application.skills}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
+              <TextField
+                label="Skills"
+                value={application.skills}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-            {application.fileDownloadURL && (
-              <div>
-                <Button variant="contained" color="primary" className={classes.submitButton} onClick={handleDocumentPreviewOpen}>
-                  View Document
-                </Button>
-                <Dialog open={showDocumentPreview} onClose={handleDocumentPreviewClose} className={classes.documentPreviewModal}>
-                  <DialogTitle>Document Preview</DialogTitle>
-                  <DialogContent style={{ width: "60vw" }}>
-                    <iframe src={application.fileDownloadURL} className={classes.documentPreview} title="Document Preview"></iframe>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            )}
+              {application.fileDownloadURL && (
+                <div>
+                  <Button variant="contained" color="primary" className={classes.submitButton} onClick={handleDocumentPreviewOpen}>
+                    View Document
+                  </Button>
+                  <Dialog open={showDocumentPreview} onClose={handleDocumentPreviewClose} className={classes.documentPreviewModal}>
+                    <DialogTitle>Document Preview</DialogTitle>
+                    <DialogContent style={{ width: "60vw" }}>
+                      <iframe src={application.fileDownloadURL} className={classes.documentPreview} title="Document Preview"></iframe>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
 
-            <Button variant="contained" style={{backgroundColor:"#029c02e6", color:"white"}} className={classes.submitButton} onClick={sendEmail}>
-              Send Email
-            </Button>
+              <Button variant="contained" style={{backgroundColor:"#029c02e6", color:"white"}} className={classes.submitButton} onClick={sendEmail}>
+                Send Email
+              </Button>
 
-            <Dialog open={showSuccessModal} onClose={handleSuccessModalClose}>
-              <div className={classes.successModal}>
-                <CheckCircleOutlineIcon className={classes.successIcon} />
-                <Typography variant="h6" className={classes.successMessage}>
-                  Email Sent Successfully!
-                </Typography>
-                <Button variant="contained" color="primary" onClick={handleSuccessModalClose}>
-                  Close
-                </Button>
-              </div>
-            </Dialog>
+              <Dialog open={showSuccessModal} onClose={handleSuccessModalClose}>
+                <div className={classes.successModal}>
+                  <CheckCircleOutlineIcon className={classes.successIcon} />
+                  <Typography variant="h6" className={classes.successMessage}>
+                    Email Sent Successfully!
+                  </Typography>
+                  <Button variant="contained" color="primary" onClick={handleSuccessModalClose}>
+                    Close
+                  </Button>
+                </div>
+              </Dialog>
 
-            <Dialog open={showErrorModal} onClose={handleErrorModalClose}>
-              <div className={classes.errorModal}>
-                <CancelOutlinedIcon className={classes.errorIcon} />
-                <Typography variant="h6" className={classes.errorMessage}></Typography>
-                <CancelOutlinedIcon className={classes.errorIcon} />
-                <Typography variant="h6" className={classes.errorMessage}>
-                  Email Not Sent. Please try again.
-                </Typography>
-                <Button variant="contained" color="primary" onClick={handleErrorModalClose}>
-                  Close
-                </Button>
-              </div>
-            </Dialog>
-          </form>
-        ) : (
-          <Skeleton height={400} count={6} />
-        )}
-      </CardContent>
-    </Card>
+              <Dialog open={showErrorModal} onClose={handleErrorModalClose}>
+                <div className={classes.errorModal}>
+                  <CancelOutlinedIcon className={classes.errorIcon} />
+                  <Typography variant="h6" className={classes.errorMessage}></Typography>
+                  <CancelOutlinedIcon className={classes.errorIcon} />
+                  <Typography variant="h6" className={classes.errorMessage}>
+                    Email Not Sent. Please try again.
+                  </Typography>
+                  <Button variant="contained" color="primary" onClick={handleErrorModalClose}>
+                    Close
+                  </Button>
+                </div>
+              </Dialog>
+            </form>
+          ) : (
+            <Skeleton height={400} count={6} />
+          )}
+        </CardContent>
+      </Card>
+      <Footer/>
+    </>
   );
 };
 
