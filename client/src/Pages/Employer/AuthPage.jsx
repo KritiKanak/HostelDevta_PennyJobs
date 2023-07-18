@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LoginEm from '../../components/Employer/Auth/Login';
 import SignupEm from '../../components/Employer/Auth/Signup';
 import Navbar from '../../components/Employer/Navbar';
+import Footer from '../../components/Footer';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -19,6 +20,7 @@ const AuthPage = () => {
           {isLogin ? 'Create an Account' : 'Already have an account?'}
         </button>
       </div>
+      <Footer/>
     </>
   );
 };

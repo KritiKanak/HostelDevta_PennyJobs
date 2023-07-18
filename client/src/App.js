@@ -17,7 +17,7 @@ import JobSeekerDetails from './Pages/Jobseeker/Details';
 import JsDashboard from './Pages/Jobseeker/Dashboard'
 import JobseekerState from './context/Jobseeker/JobseekerState'
 import JobDetails from './Pages/Jobseeker/JobDetails'
-import Jobapplied from './Pages/Jobseeker/JobsApplied';
+// import Jobapplied from './components/Jobseeker/Dashcomps/JobsApplied';
 import JobSeekerProfile from './components/Jobseeker/Dashcomps/profile';
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
             <Route path="/candidate/details" element={<JobSeekerDetails/>} exact/>
             <Route path="/candidate/dashboard" element={<JsDashboard/>} exact/>
             <Route path="/fetch/:jobId" element={<JobDetails/>}/>
-            <Route path="/candidate/job-applied" element={<Jobapplied/>} exact/>
+            {/* <Route path="/candidate/job-applied" element={<Jobapplied/>} exact/> */}
             <Route path="/candidate/profile" element={<JobSeekerProfile/>} exact/>
           </Routes>
 

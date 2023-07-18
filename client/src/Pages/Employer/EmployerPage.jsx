@@ -7,12 +7,12 @@ import AuthPage from './AuthPage';
 const EmployerPage = () => {
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="container mt-5">
-        <h1>Employer Page</h1>
+        {/* <h1>Employer Page</h1> */}
         <AuthPage/>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   );
 };
